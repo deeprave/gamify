@@ -5,6 +5,6 @@ exports.install = function () {
 };
 
 function view_index() {
-  var self = this;
+  let self = this;
   self.view("index");
 }

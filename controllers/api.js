@@ -1,23 +1,19 @@
-exports.install = function () {
+const { summaryScores } = require('../services/scoreKeeper');
 
-//ROUTE("/api/", ...);
+exports.install = function () {
+  CORS();
+
+  ROUTE("POST /api/scores", getScores);
 };
 
-/* utility functions & definitions */
+function getScores() {
+  const self = this;
+  const { scope, company, team, userid } = self.body;
 
-// https://stackoverflow.com/a/8809472/1956886
-function uuidv4() { // Public Domain/MIT
-  let d = new Date().getTime();//Timestamp
-  let d2 = 0;
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    let r = Math.random() * 16;//random number between 0 and 16
-    if(d > 0) {///Use timestamp until depleted
-      r = (d + r)%16 | 0;
-      d = Math.floor(d/16);
-    } else {//Use microseconds since page-load if supported
-      r = (d2 + r)%16 | 0;
-      d2 = Math.floor(d2/16);
-    }
-    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-  });
+  try {
+    self.json(summaryScores(scope, company, team, userid));
+  } catch(err) {
+    self.responseCode = err.code;
+    self.responseText = err.message;
+  }
 }

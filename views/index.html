@@ -29,13 +29,13 @@
 			$.ajax('/api/token/', {
 				type: 'POST', // http method
 				data: data, // data to submit
-				success: function (data, status, xhr) {
+				success: function (data, status) {
 					const token = parseJwt(data.access_token);
 					console.log(`status: ${status}, token: ${JSON.stringify(token)}`);
 					window.location = '/dataList';
 				},
 				error: function (jqXhr, textStatus, errorMessage) {
-					$('p').append('Error' + errorMessage);
+					$('p').append('Error -- ' + errorMessage);
 				}
 			});
 			return false;
