@@ -8,12 +8,11 @@ exports.install = function () {
 
 function getScores() {
   const self = this;
-  const { scope, company, team, userid } = self.body;
+  const { scope, category, company, team, userid } = self.body;
 
   try {
-    self.json(summaryScores(scope, company, team, userid));
+    self.json(summaryScores(scope, category, company, team, userid));
   } catch(err) {
-    self.responseCode = err.code;
-    self.responseText = err.message;
+    self.error(err.code, err.message);
   }
 }
