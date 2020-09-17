@@ -1,0 +1,10 @@
+// Change the environment to change the configuration set.
+env                  : dev
+// turn off minification
+allow_compile_script : false
+
+// dev environment settings
+dev.database        : postgres://postgres:qwerty_1@localhost:5555/unico_test
+
+// test environment settings
+test.database       : postgres://postgres:newPassword@localhost:5000/contacts

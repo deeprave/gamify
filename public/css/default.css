@@ -1,0 +1,21 @@
+.btn-circle {
+    border-radius: 15px;
+    height: 30px;
+    width: 30px;
+    line-height: 45px;
+    text-align: center;
+    padding: 0;
+}
+
+.btn-circle i{
+    position: relative;
+    top: -8px;
+}
+
+.clear-both {
+    clear: both;
+}
+.hidden {
+    display: none!important;
+    visibility: hidden!important;
+}
