@@ -1,5 +1,5 @@
 /**
- *
+ * return scores
  * @param {string} scope
  * @param {string} category
  * @param {string} company
