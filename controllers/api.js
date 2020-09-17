@@ -4,7 +4,7 @@ exports.install = function () {
   CORS();
 
   ROUTE("POST /api/scores", getScores);
-  ROUTE("POST /api/update", setScores)
+  ROUTE("POST /api/update", setScore)
 };
 
 function getScores() {
