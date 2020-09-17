@@ -1,19 +1,21 @@
 const { summaryScores, updateScore } = require('../services/scoreKeeper');
+const queryString = require('query-string');
 
 exports.install = function () {
   CORS();
 
-  ROUTE("POST /api/scores", getScores);
-  ROUTE("POST /api/update", setScore)
+  ROUTE("GET /api/scores", getScores);
+  ROUTE("POST /api/update/", setScore)
 };
 
 function getScores() {
   const self = this;
-  const { scope, category, company, team, userid } = self.body;
+  const parsed = queryString.parse(queryString.extract(self.req.url));
+  const { scope, category, company, team, userid } = parsed;
 
   try {
     self.json(summaryScores(scope, category, company, team, userid));
-  } catch(err) {
+  } catch (err) {
     self.error(err.code, err.message);
   }
 }
@@ -23,7 +25,7 @@ function setScore() {
   const { category, company, team, userid, delta } = self.body;
 
   try {
-    self.json(updateScore(category, company, team, userid));
+    self.json(updateScore(category, company, team, userid, delta));
   } catch(err) {
     self.error(err.code, err.message);
   }

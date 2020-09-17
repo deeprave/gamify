@@ -1,13 +1,13 @@
 
-INSERT INTO users (name, email)
+INSERT INTO users (login, name, email)
 VALUES
-    ('John Citizen', 'john@example.com'),   -- 1
-    ('Jane Doe', 'jane@example.com'),       -- 2
-    ('Peter Famous', 'peter@example.com'),  -- 3
-    ('Wendy Farmer', 'wendy@example.com'),  -- 4
-    ('Zack Soccerberg', 'zs@example.com'),  -- 5
-    ('Ted Warder', 'ted@example.com'),      -- 6
-    ('Jenny Irving', 'ji@example.com')      -- 7
+    ('john', 'John Citizen', 'john@example.com'),    -- 1
+    ('jane', 'Jane Doe', 'jane@example.com'),       -- 2
+    ('peter', 'Peter Famous', 'peter@example.com'), -- 3
+    ('wendy', 'Wendy Farmer', 'wendy@example.com'), -- 4
+    ('zack', 'Zack Soccerberg', 'zs@example.com'),  -- 5
+    ('ted', 'Ted Warder', 'ted@example.com'),       -- 6
+    ('jenny', 'Jenny Irving', 'ji@example.com')     -- 7
 ;
 
 INSERT INTO company (shortname, name)
@@ -42,28 +42,28 @@ VALUES
     (3, 5)
 ;
 
-INSERT INTO targets (challenge_id, company_id, team_id, user_id, target)
+INSERT INTO targets (challenge, company, team, userid, target)
 VALUES
--- challenge_id, company_id, team_id, user_id, target
-    (1, 2, 1, 1, 100),
-    (1, 2, 2, 4, 100),
-    (2, 2, 1, 1, 31),
-    (2, 2, 1, 4, 31),
-    (2, 2, 2, 3, 31),
-    (2, 2, 2, 7, 31),
-    (2, 2, 3, 6, 31),
-    (2, 2, 3, 2, 31),
-    (2, 2, 3, 5, 31)
+-- challenge, company, team, userid, target
+    ('learning',   'unico', 'hi-fliers',   'john', 100),
+    ('learning',   'unico', 'lo-dwellers', 'wendy', 100),
+    ('timesheets', 'unico', 'hi-fliers',   'john', 31),
+    ('timesheets', 'unico', 'hi-fliers',   'wendy', 31),
+    ('timesheets', 'unico', 'lo-dwellers', 'peter', 31),
+    ('timesheets', 'unico', 'lo-dwellers',  'jenny', 31),
+    ('timesheets', 'unico', 'middles',     'ted', 31),
+    ('timesheets', 'unico', 'middles',     'jane', 31),
+    ('timesheets', 'unico', 'middles',     'zack', 31)
 ;
 
-INSERT INTO statistics (challenge_id, company_id, team_id, user_id, score_delta)
+INSERT INTO statistics (challenge, company, team, userid, delta)
 VALUES
-    (2, 2, 1, 1, 14),
-    (2, 2, 1, 1, 16),
-    (2, 2, 1, 4, 12),
-    (2, 2, 2, 3, 19),
-    (2, 2, 2, 7, 17),
-    (2, 2, 3, 6, 19),
-    (2, 2, 3, 2, 21),
-    (2, 2, 3, 5, 20)
+    ('timesheets', 'unico', 'hi-fliers', 'john', 14),
+    ('timesheets', 'unico', 'hi-fliers', 'john', 16),
+    ('timesheets', 'unico', 'hi-fliers', 'wendy', 12),
+    ('timesheets', 'unico', 'lo-dwellers', 'peter', 19),
+    ('timesheets', 'unico', 'lo-dwellers', 'jenny', 17),
+    ('timesheets', 'unico', 'middles', 'ted', 19),
+    ('timesheets', 'unico', 'middles', 'jane', 21),
+    ('timesheets', 'unico', 'middles', 'zack', 20)
 ;
