@@ -4,7 +4,7 @@ env                  : dev
 allow_compile_script : false
 
 // dev environment settings
-dev.database        : postgres://postgres:qwerty_1@localhost:5555/unico_test
+dev.database        : postgres://gamify_user:yPN92ngZTvnovwHP@localhost/gamify
 
 // test environment settings
-test.database       : postgres://postgres:newPassword@localhost:5000/contacts
+test.database       : postgres://gamify_user:yPN92ngZTvnovwHP@localhost/gamify_test

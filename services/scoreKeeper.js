@@ -1,17 +1,16 @@
 /**
- *
- * @param {string|null} category
+ * @param {*} request
+ * @param {string|null} challenge
  * @param {string|null} company
  * @param {string|null} team
  * @param {string|null} userid
- * @returns {{score: (*|number), target: (*|number)}}
  */
-function getScore(category=null, company=null, team=null, userid=null) {
+async function getScore(request, challenge=null, company=null, team=null, userid=null) {
     const filters = [];
     const fields = {}
-    if (category) {
-        filters.push(`category='${category}'`);
-        fields.category = category;
+    if (challenge) {
+        filters.push(`challenge='${challenge}'`);
+        fields.challenge = challenge;
     }
     if (company) {
         filters.push(`company='${company}'`);
@@ -28,39 +27,62 @@ function getScore(category=null, company=null, team=null, userid=null) {
     const where = filters.join(' AND ');
 
     const db = DBMS();
-    const total = db.select("SELECT sum(delta) FROM statistics")
-        .where(where);
-    const target = db.select("SELECT sum(target) FROM targets")
-        .where(where);
-    return {
-        ...fields,
-        score: total.length > 0 ? total[0] : 0,
-        target: target.length > 0 ? target[0] : 0,
-    }
+    DBMS().sum("statistics", "delta").where(where).promise().then(function(delta) {
+        DBMS().sum("targets", "target").where(where).promise().then(function(target) {
+            const result = {
+                ...fields,
+                score: delta,
+                target: target,
+            };
+            request.json(result);
+            console.log(result);
+        }, function(err) {
+            request.error500(err.message)
+        });
+    }, function(err) {
+        request.error500(err.message)
+    });
 }
 
 /**
  * return scores
+ * @param {*} request
  * @param {string} scope
- * @param {string} category
+ * @param {string} challenge
  * @param {string} company
  * @param {string} team
  * @param {string} userid
  */
-function summaryScores(scope, category, company, team, userid) {
-    // @todo hard code for now and ignore category
-    switch (scope) {
-        case 'company':
-            return getScore(category, company);
-        case 'team':
-            return getScore(category, company, team);
-        case 'userid':
-            return getScore(category, company, team, userid);
-        default:
-            const error = new Error("Invalid request, scope not valid");
-            error.code = 400;
-            throw error;
+function summaryScores(request, scope, challenge, company, team, userid) {
+    if (!challenge) {
+        request.error400("Invalid request, challenge missing or is not valid");
+    } else {
+        switch (scope) {
+            case 'company':
+                getScore(request, challenge, company);
+                break;
+            case 'team':
+                getScore(request, challenge, company, team);
+                break;
+            case 'userid':
+                getScore(request, challenge, company, team, userid);
+                break;
+            default:
+                request.error400("Invalid request, scope not valid");
+                break;
+        }
     }
+}
+
+/**
+ * update scores
+ * @param {string} challenge
+ * @param {string} company
+ * @param {string} team
+ * @param {string} userid
+ */
+function updateScore(challenge, company, team, userid) {
+    DBMS().insert("statistics", {challenge, company, team, userid});
 }
 
 module.exports = {
