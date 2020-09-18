@@ -1,11 +1,11 @@
 /**
- * @param {*} request
+ * @param {*} self
  * @param {string|null} challenge
  * @param {string|null} company
  * @param {string|null} team
  * @param {string|null} userid
  */
-async function getScore(request, challenge=null, company=null, team=null, userid=null) {
+async function getScore(self, challenge=null, company=null, team=null, userid=null) {
     const filters = [];
     const fields = {}
     if (challenge) {
@@ -27,48 +27,49 @@ async function getScore(request, challenge=null, company=null, team=null, userid
     const where = filters.join(' AND ');
 
     const db = DBMS();
-    DBMS().sum("statistics", "delta").where(where).promise().then(function(delta) {
-        DBMS().sum("targets", "target").where(where).promise().then(function(target) {
+    await db.sum("statistics", "delta").where(where).promise().then(async function(delta) {
+        await db.sum("targets", "target").where(where).promise().then(function(target) {
             const result = {
                 ...fields,
                 score: delta,
                 target: target,
             };
-            request.json(result);
-            console.log(result);
+            //request.json(result);
+            console.log('returning:', result);
+            self.json(result);
         }, function(err) {
-            request.error500(err.message)
+            self.error500(err.message)
         });
     }, function(err) {
-        request.error500(err.message)
+        self.error500(err.message)
     });
 }
 
 /**
  * return scores
- * @param {*} request
+ * @param {*} self
  * @param {string} scope
  * @param {string} challenge
  * @param {string} company
  * @param {string} team
  * @param {string} userid
  */
-function summaryScores(request, scope, challenge, company, team, userid) {
+async function summaryScores(self, scope, challenge, company, team, userid) {
     if (!challenge) {
-        request.error400("Invalid request, challenge missing or is not valid");
+        self.error400("Invalid request, challenge missing or is not valid");
     } else {
         switch (scope) {
             case 'company':
-                getScore(request, challenge, company);
+                getScore(self, challenge, company);
                 break;
             case 'team':
-                getScore(request, challenge, company, team);
+                getScore(self, challenge, company, team);
                 break;
             case 'userid':
-                getScore(request, challenge, company, team, userid);
+                getScore(self, challenge, company, team, userid);
                 break;
             default:
-                request.error400("Invalid request, scope not valid");
+                self.error400("Invalid request, scope not valid");
                 break;
         }
     }
@@ -76,13 +77,24 @@ function summaryScores(request, scope, challenge, company, team, userid) {
 
 /**
  * update scores
+ * @param {*} self
  * @param {string} challenge
  * @param {string} company
  * @param {string} team
  * @param {string} userid
+ * @param {string} delta
  */
-function updateScore(challenge, company, team, userid) {
-    DBMS().insert("statistics", {challenge, company, team, userid});
+async function updateScore(self, challenge, company, team, userid, delta=1) {
+    const db = DBMS();
+    await db.insert("statistics", {challenge, company, team, userid, delta})
+        .primarykey("id")
+        .promise().then (function () {
+            const result = {success: true };
+            console.log('returning:', result);
+            self.json(result);
+    }, function(err) {
+        console.log(err);
+    });
 }
 
 module.exports = {

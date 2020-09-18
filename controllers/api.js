@@ -4,8 +4,8 @@ const queryString = require('query-string');
 exports.install = function () {
   CORS();
 
-  ROUTE("GET /api/scores", getScores);
-  ROUTE("POST /api/update/", setScore)
+  ROUTE("GET /api/v1/scores", getScores);
+  ROUTE("POST /api/v1/update/", setScore)
 };
 
 function getScores() {
@@ -25,7 +25,7 @@ function setScore() {
   const { challenge, company, team, userid, delta } = self.body;
 
   try {
-    self.json(updateScore(self, challenge, company, team, userid, delta));
+    updateScore(self, challenge, company, team, userid, delta);
   } catch(err) {
     self.error(err.code, err.message);
   }
