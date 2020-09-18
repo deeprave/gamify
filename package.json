@@ -13,6 +13,7 @@
   "dependencies": {
     "dbms": "^0.8.0",
     "pg": "^8.3.2",
+    "query-string": "^6.13.2",
     "total.js": "^3.4.5"
   }
 }
