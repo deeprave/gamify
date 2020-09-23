@@ -1,7 +1,7 @@
-# Objectives #
+# Objectives
 
 
-## gamification ##
+## gamification
 noun
 > gam·​i·​fi·​ca·​tion | \ ˌgā-mə-fə-ˈkā-shən
 
@@ -9,7 +9,7 @@ noun
 > <cite>[Mirriam-Webster dictionary](https://www.merriam-webster.com/dictionary/gamification)</cite>
 
 
-## gamify ##
+## gamify
 transitive verb, **gamified**; **gamifying**; **gamifies**
 > gā-​mə-​ˌfī
 
@@ -17,14 +17,13 @@ transitive verb, **gamified**; **gamifying**; **gamifies**
 > <cite>J. J. Rosen</cite>
 
 
-
 The definition of these words provides the focus for this project; to make the internal process of staff feedback and recognition fun, involving, possibly competitive and even addictive.
 
-# API #
+# API
 
 gamify is an API service with the following endpoints.
 
-## GET /api/scores
+## GET /api/v1/scores
 
 This endpoint returns current scores based in a given scope and challenge. GET
 parameters are privided in the usual way:
@@ -42,3 +41,22 @@ Examples:
 
   /api/scores?challenge=timesheet&scope=company&company=unico
 ```
+
+## POST /api/v1/update
+
+This endpoint posts a new (usually incremental) gamification "transaction".
+All parameters are specified in the json payload:
+```json
+{
+  "challenge": "<challenge identifier>",
+  "company": "<company identifier>",
+  "team": "<team identifier>",
+  "userid": "<user identifier>"
+}
+```
+and returns:
+```json
+{"success":"true"}
+```
+on success.
+Note that rate limiting is applied on non-authenticated transactions.

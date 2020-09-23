@@ -56,7 +56,7 @@ VALUES
     ('timesheets', 'unico', 'middles',     'zack', 31)
 ;
 
-INSERT INTO statistics (challenge, company, team, userid, delta)
+INSERT INTO events (challenge, company, team, userid, delta)
 VALUES
     ('timesheets', 'unico', 'hi-fliers', 'john', 14),
     ('timesheets', 'unico', 'hi-fliers', 'john', 16),

@@ -27,7 +27,7 @@ async function getScore(self, challenge=null, company=null, team=null, userid=nu
     const where = filters.join(' AND ');
 
     const db = DBMS();
-    await db.sum("statistics", "delta").where(where).promise().then(async function(delta) {
+    await db.sum("events", "delta").where(where).promise().then(async function(delta) {
         await db.sum("targets", "target").where(where).promise().then(function(target) {
             const result = {
                 ...fields,
@@ -86,7 +86,7 @@ async function summaryScores(self, scope, challenge, company, team, userid) {
  */
 async function updateScore(self, challenge, company, team, userid, delta=1) {
     const db = DBMS();
-    await db.insert("statistics", {challenge, company, team, userid, delta})
+    await db.insert("events", {challenge, company, team, userid, delta})
         .primarykey("id")
         .promise().then (function () {
             const result = {success: true };

@@ -6,7 +6,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-create table statistics (
+create table events (
     id SERIAL PRIMARY KEY,
     challenge varchar NOT NULL,
     company varchar NOT NULL,
@@ -17,7 +17,7 @@ create table statistics (
     delta INT NOT NULL DEFAULT 1
 );
 
-CREATE TRIGGER update_statistics BEFORE UPDATE ON statistics
+CREATE TRIGGER update_event BEFORE UPDATE ON events
     FOR EACH ROW EXECUTE PROCEDURE update_changed_timestamp();
 
 create table targets (
@@ -31,5 +31,5 @@ create table targets (
     target INT NOT NULL
 );
 
-CREATE TRIGGER update_statistics BEFORE UPDATE ON targets
+CREATE TRIGGER update_target BEFORE UPDATE ON targets
     FOR EACH ROW EXECUTE PROCEDURE update_changed_timestamp();
