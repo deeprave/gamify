@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>2c854179-118a-49c4-a54c-775a72a32fdf.SCHEMA:gamify.public</OriginalElement>
+  <nodes>
+    <node x="177.0" y="0.0">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.users</node>
+    <node x="91.0" y="172.0">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.member</node>
+    <node x="338.4412265758092" y="294.0408858603066">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.events</node>
+    <node x="0.0" y="11.0">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.team</node>
+    <node x="0.0" y="294.0">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.targets</node>
+    <node x="350.3526405451448" y="6.797274275979589">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.challenge</node>
+    <node x="531.0971039182283" y="5.366269165247104">2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.company</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.member" target="2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.team">
+      <point x="-33.5" y="-38.5" />
+      <point x="124.5" y="147.0" />
+      <point x="78.5" y="147.0" />
+      <point x="0.0" y="50.0" />
+    </edge>
+    <edge source="2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.member" target="2c854179-118a-49c4-a54c-775a72a32fdf.TABLE:gamify.public.users">
+      <point x="33.5" y="-38.5" />
+      <point x="191.5" y="147.0" />
+      <point x="237.5" y="147.0" />
+      <point x="0.0" y="61.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8774289985052317" x="310.5" y="324.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
